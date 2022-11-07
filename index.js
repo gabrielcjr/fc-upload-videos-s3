@@ -2,19 +2,22 @@ const { getVideoDurationInSeconds } = require('get-video-duration')
 const path = require('path');
 const fs = require('fs');
 
+
+(async () => {
 const directoryPath = path.join(__dirname, 'videos');
 
-var videos = []
+global.videos = []
 
-fs.readdir(directoryPath, async function (err, files) {
-    if (err) {
-        return console.log('Unable to scan directory: ' + err);
-    } 
-    for (const file of files) {
-        await getVideoDurationInSeconds(`videos/${file}`).then((duration) => {
-            videos.push({file: duration.toFixed(0)})
-          })
-    };
-});
+const files = fs.readdirSync(directoryPath)
+
+for (const file of files) {
+        videos.push(
+            {
+                files: (await getVideoDurationInSeconds(`videos/${file}`)).toFixed(0)
+            })
+
+}
 
 console.log(videos)
+})()
+
