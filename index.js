@@ -11,7 +11,9 @@ class Videos {
         const files = fs.readdirSync(directoryPath)
 
         for (const file of files) {
-                videos += file +" " + (await getVideoDurationInSeconds(`videos/${file}`)).toFixed(0)+"\r\n"
+                
+                const time = (await getVideoDurationInSeconds(`videos/${file}`))
+                videos += file +" " + this._formatTime(time) +"\r\n"
         }
         this._saveInFile(videos)
         }
@@ -25,8 +27,22 @@ class Videos {
     _formatTime = (seconds) => {
         const inSeconds = seconds
 
-        const minutesFraction = seconds/60
+        const minutesFraction = Math.trunc((seconds/60))
 
+        const secondsFraction = Math.trunc((seconds % 60))
+
+        if (minutesFraction >= 10 && secondsFraction >= 10) {
+            return `${minutesFraction}:${secondsFraction}`
+        }
+        if (minutesFraction < 10 && secondsFraction >= 10) {
+            return `0${minutesFraction}:${secondsFraction}`
+        }
+        if (minutesFraction < 10 && secondsFraction < 10) {
+            return `0${minutesFraction}:0${secondsFraction}`
+        }
+        if (minutesFraction >= 10 && secondsFraction < 10) {
+            return `${minutesFraction}:0${secondsFraction}`
+        }
         console.log(minutesFraction)
     }
 
