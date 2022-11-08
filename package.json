@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "aws-sdk": "^2.1249.0",
+    "dotenv": "^16.0.3",
     "get-video-duration": "^4.1.0"
   }
 }

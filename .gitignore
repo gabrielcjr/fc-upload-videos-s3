@@ -2,3 +2,4 @@ node_modules/
 videos/
 package-lock.json
 videos.txt
+.env
