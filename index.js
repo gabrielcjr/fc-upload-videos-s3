@@ -4,6 +4,12 @@ const fs = require('fs');
 
 class Videos {
 
+    repo = ""
+
+    constructor(repo)  {
+        this.repo = repo
+    }
+
     createFileVideosDuration = async () => {
         const directoryPath = path.join(__dirname, 'videos');
 
@@ -13,7 +19,7 @@ class Videos {
         for (const file of files) {
                 
                 const time = (await getVideoDurationInSeconds(`videos/${file}`))
-                videos += file +" " + this._formatTime(time) +"\r\n"
+                videos += this.repo + file +" " + this._formatTime(time) +"\r\n"
         }
         this._saveInFile(videos)
         }
@@ -43,12 +49,9 @@ class Videos {
         if (minutesFraction >= 10 && secondsFraction < 10) {
             return `${minutesFraction}:0${secondsFraction}`
         }
-        console.log(minutesFraction)
     }
-
-
 }
 
-const videos = new Videos()
+const videos = new Videos("code/go/15/")
 
 videos.createFileVideosDuration()
