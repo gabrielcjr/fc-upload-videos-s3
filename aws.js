@@ -31,3 +31,4 @@ const readStream = fs.createReadStream('videos/01-Sobre-sistema-de-migracoes-no-
 
 readStream.pipe(uploadFile('01-Sobre-sistema-de-migracoes-no-Sequelize.mp4','5/', process.env.REPO_TYPESCRIPT))
 
+//    ACL:'public-read'
