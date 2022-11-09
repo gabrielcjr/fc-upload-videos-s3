@@ -11,7 +11,6 @@ const s3 = new AWS.S3({
   })
 
 const uploadFile = (file, chapter, path) => {
-  // const fileContent  = fs.readFileSync(__dirname, file)
   
   const fileStream = new stream.PassThrough();
   
@@ -27,8 +26,8 @@ const uploadFile = (file, chapter, path) => {
   return fileStream
 }
 
-const readStream = fs.createReadStream('videos/01-Sobre-sistema-de-migracoes-no-Sequelize.mp4');
+const readStream = fs.createReadStream('videos/3.1-Entendendo-a-primeira-linha.mp4');
 
-readStream.pipe(uploadFile('01-Sobre-sistema-de-migracoes-no-Sequelize.mp4','5/', process.env.REPO_TYPESCRIPT))
+readStream.pipe(uploadFile('3.1-Entendendo-a-primeira-linha.mp4','5/', process.env.REPO_TYPESCRIPT))
 
 //    ACL:'public-read'

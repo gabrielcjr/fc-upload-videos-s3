@@ -1,33 +1,45 @@
+require('dotenv').config()
 const { getVideoDurationInSeconds } = require('get-video-duration')
 const path = require('path');
 const fs = require('fs');
-const AWS =require('aws-sdk');
+
 
 class Videos {
 
     repo = ""
+    chapter = ""
 
-    constructor(repo)  {
+    constructor(repo, chapter)  {
         this.repo = repo
+        this.chapter = chapter
     }
 
     createFileVideosDuration = async () => {
 
-        const files = this.getFilesPath(false)
+        const files = this.getFilesPath(true)
         let videos = ""
 
         for (const file of files) {
                 const time = (await getVideoDurationInSeconds(`videos/${file}`))
-                videos += this.repo + file +" " + this._formatTime(time) +"\r\n"
+                videos += this.repo + this.chapter + file +" " + this._formatTime(time) +"\r\n"
         }
         this._saveInFile(videos)
         }
     
     getFilesPath(completePath) {
         const directoryPath = path.join(__dirname, 'videos');
+        const fileNames = fs.readdirSync(directoryPath)
         if (completePath === false) {
-            return fs.readdirSync(directoryPath)
+            return fileNames
         }
+        if (completePath === true) {
+            const result = fileNames.forEach(element => {
+                element = `videos/${element}`
+            return result
+        });
+        }
+        
+        
     }
 
     _saveInFile = (videos) => {
@@ -58,7 +70,9 @@ class Videos {
     }
 }
 
-const videos = new Videos("code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript/12/")
+console.log(process.env.REPO_TYPESCRIPT)
+
+const videos = new Videos(process.env.REPO_TYPESCRIPT, "12/")
 
 videos.createFileVideosDuration()
 // console.log(videos.getFilesPath(false))
