@@ -18,32 +18,40 @@ const s3 = new AWS.S3({
 //     }
 //   });
 
-s3.putObjectAcl({
-Bucket: process.env.AWS_BUCKET_NAME_READ,
-Key: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript/5/3.1-Entendendo-a-primeira-linha.mp4/**',
-AccessControlPolicy: {
-    Grants: [
-        {
-            Grantee: {
-                Type: 'CanonicalUser',
-                DisplayName: 'wesleywillians',
-                ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
+// s3.putObjectAcl({
+// Bucket: process.env.AWS_BUCKET_NAME_READ,
+// Key: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript/5/3.1-Entendendo-a-primeira-linha.mp4/**',
+// AccessControlPolicy: {
+//     Grants: [
+//         {
+//             Grantee: {
+//                 Type: 'CanonicalUser',
+//                 DisplayName: 'wesleywillians',
+//                 ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
                 
-            },
-            Permission: 'FULL_CONTROL'
-        },
-        {
-            Grantee: {
-                Type: "Group",
-                URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
-            },
-            Permission: "READ",
-        }
-    ],
-    Owner: {
-        DisplayName: 'wesleywillians',
-        ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
-    }}
-}).promise()
+//             },
+//             Permission: 'FULL_CONTROL'
+//         },
+//         {
+//             Grantee: {
+//                 Type: "Group",
+//                 URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
+//             },
+//             Permission: "READ",
+//         }
+//     ],
+//     Owner: {
+//         DisplayName: 'wesleywillians',
+//         ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
+//     }}
+// }).promise()
 
-s3.
+const list = await s3.listObjectsV2({
+    Bucket: process.env.AWS_BUCKET_NAME_READ,
+    Prefix: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript/5/3.1-Entendendo-a-primeira-linha.mp4/'
+}, function(err, data) {
+    if (err) console.log(err, err.stack)
+    else console.log(data)
+})
+
+
