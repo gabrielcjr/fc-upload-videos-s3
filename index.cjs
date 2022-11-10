@@ -79,13 +79,30 @@ videos.createFileVideosDuration()
 const fullLocalPath = videos.getFilesPath(true)
 const fileNames = videos.getFilesPath(false)
 
-for (i = 0; i != fullLocalPath.length; i++) {
-    const awsUpload = new AWSUpload(
-        REPO,
-        CHAPTER,
-        fileNames[i],
-        fullLocalPath[i]
-    )
-    awsUpload.uploadVideos()
+const uploadVideos = () => {
+    for (i = 0; i != fullLocalPath.length; i++) {
+        const awsUpload = new AWSUpload(
+            REPO,
+            CHAPTER,
+            fileNames[i],
+            fullLocalPath[i]
+        )
+        awsUpload.uploadVideos()
+    }
 }
 
+const changePermission = () => {
+    for (i = 0; i != fullLocalPath.length; i++) {
+        const awsUpload = new AWSUpload(
+            REPO,
+            CHAPTER,
+            fileNames[i],
+            fullLocalPath[i]
+        )
+        awsUpload.changePathToPublicRead()
+    }
+}
+
+// uploadVideos()
+
+changePermission()
