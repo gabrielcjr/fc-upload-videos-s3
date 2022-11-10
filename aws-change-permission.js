@@ -10,11 +10,6 @@ const s3 = new AWS.S3({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 })
 
-let params = {
-    Bucket: process.env.AWS_BUCKET_NAME_READ,
-    Prefix: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript/5/3.1-Entendendo-a-primeira-linha.mp4/'
-}
-
 class AWSUpload {
 
     S3PathToRepo = ""
@@ -27,6 +22,7 @@ class AWSUpload {
         this.chapter = chapter
         this.fileName = fileName
         this.videosLocalPath = videosLocalPath
+
     }
 
     uploadVideos() {
@@ -43,33 +39,17 @@ class AWSUpload {
 
         s3.upload(uploadParams).promise()
 
-        const readStream = fs.createReadStream(this.videosLocalPath); // 'videos/3.1-Entendendo-a-primeira-linha.mp4'
+        const readStream = fs.createReadStream(this.videosLocalPath);
 
         readStream.pipe(fileStream)
     }
-}
 
-// const awsUpload = new AWSUpload(
-//     process.env.REPO_TYPESCRIPT,
-//     '6/',
-//     '3.2-Declaracao-e-atribuicao.mp4',
-//     'videos/3.2-Declaracao-e-atribuicao.mp4'
-// )
-
-// awsUpload.uploadVideos()
-
-
-
-
-class AWSPermission {
-
-    params = {}
-
-    constructor(params) {
-        this.params = params
-    }
 
     changePathToPublicRead() {
+        const params = {
+            Bucket: process.env.AWS_BUCKET_NAME_READ,
+            Prefix: this.S3PathToRepo + this.chapter + this.fileName
+        }
         s3.listObjectsV2(params, function (err, data) {
             if (err) console.log(err, err.stack)
             let contents = data.Contents
@@ -106,7 +86,7 @@ class AWSPermission {
             });
 
             if (data.IsTruncated) {
-                params.ContinuationToken = data.NextContinuationToken;
+                this.params.ContinuationToken = data.NextContinuationToken;
                 console.log("get further list...");
                 listAllKeys();
             }
@@ -114,6 +94,14 @@ class AWSPermission {
     }
 }
 
-// changePermissionAWS = new AWSPermission(params)
+const awsUpload = new AWSUpload(
+    process.env.REPO_TYPESCRIPT,
+    '6/',
+    '1.0-intro.mp4',
+    'videos/1.0-intro.mp4'
+)
 
-// changePermissionAWS.changePathToPublicRead()
+// awsUpload.uploadVideos()
+
+awsUpload.changePathToPublicRead()
+
