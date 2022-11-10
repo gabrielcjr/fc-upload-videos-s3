@@ -2,7 +2,10 @@ require('dotenv').config()
 const { getVideoDurationInSeconds } = require('get-video-duration')
 const path = require('path');
 const fs = require('fs');
+const AWSUpload = require('./aws-upload.cjs')
 
+const REPO = process.env.REPO_TYPESCRIPT
+const CHAPTER = "6/"
 
 class Videos {
 
@@ -16,7 +19,7 @@ class Videos {
 
     createFileVideosDuration = async () => {
 
-        const files = this.getFilesPath(true)
+        const files = this.getFilesPath(false)
         let videos = ""
 
         for (const file of files) {
@@ -33,13 +36,13 @@ class Videos {
             return fileNames
         }
         if (completePath === true) {
-            const result = fileNames.forEach(element => {
-                element = `videos/${element}`
-                return result
+            const result = []
+            fileNames.forEach(element => {
+                result.push(`videos/${element}`)
+
             });
+            return result
         }
-
-
     }
 
     _saveInFile = (videos) => {
@@ -69,9 +72,20 @@ class Videos {
     }
 }
 
-console.log(process.env.REPO_TYPESCRIPT)
-
-const videos = new Videos(process.env.REPO_TYPESCRIPT, "12/")
+const videos = new Videos(REPO, CHAPTER)
 
 videos.createFileVideosDuration()
-// console.log(videos.getFilesPath(false))
+
+const fullLocalPath = videos.getFilesPath(true)
+const fileNames = videos.getFilesPath(false)
+
+for (i = 0; i != fullLocalPath.length; i++) {
+    const awsUpload = new AWSUpload(
+        REPO,
+        CHAPTER,
+        fileNames[i],
+        fullLocalPath[i]
+    )
+    awsUpload.uploadVideos()
+}
+

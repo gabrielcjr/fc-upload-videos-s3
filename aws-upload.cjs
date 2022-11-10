@@ -2,6 +2,7 @@ require('dotenv').config()
 const AWS = require('aws-sdk');
 const stream = require('stream');
 const fs = require('fs');
+const { LexModelBuildingService } = require('aws-sdk');
 
 AWS.config.update({ region: 'us-east-1' });
 
@@ -36,14 +37,13 @@ class AWSUpload {
             Body: fileStream,
             Key: pathToS3
         }
-
+        console.log(`Uploading to ${pathToS3}`)
         s3.upload(uploadParams).promise()
 
         const readStream = fs.createReadStream(this.videosLocalPath);
 
         readStream.pipe(fileStream)
     }
-
 
     changePathToPublicRead() {
         const params = {
@@ -94,14 +94,5 @@ class AWSUpload {
     }
 }
 
-const awsUpload = new AWSUpload(
-    process.env.REPO_TYPESCRIPT,
-    '6/',
-    '1.0-intro.mp4',
-    'videos/1.0-intro.mp4'
-)
 
-// awsUpload.uploadVideos()
-
-awsUpload.changePathToPublicRead()
-
+module.exports = AWSUpload
