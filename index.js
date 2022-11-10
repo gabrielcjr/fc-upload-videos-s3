@@ -9,7 +9,7 @@ class Videos {
     repo = ""
     chapter = ""
 
-    constructor(repo, chapter)  {
+    constructor(repo, chapter) {
         this.repo = repo
         this.chapter = chapter
     }
@@ -20,12 +20,12 @@ class Videos {
         let videos = ""
 
         for (const file of files) {
-                const time = (await getVideoDurationInSeconds(`videos/${file}`))
-                videos += this.repo + this.chapter + file +" " + this._formatTime(time) +"\r\n"
+            const time = (await getVideoDurationInSeconds(`videos/${file}`))
+            videos += this.repo + this.chapter + file + " " + this._formatTime(time) + "\r\n"
         }
         this._saveInFile(videos)
-        }
-    
+    }
+
     getFilesPath(completePath) {
         const directoryPath = path.join(__dirname, 'videos');
         const fileNames = fs.readdirSync(directoryPath)
@@ -35,23 +35,22 @@ class Videos {
         if (completePath === true) {
             const result = fileNames.forEach(element => {
                 element = `videos/${element}`
-            return result
-        });
+                return result
+            });
         }
-        
-        
+
+
     }
 
     _saveInFile = (videos) => {
-            fs.writeFileSync('videos.txt', videos, function (err) {
-                if (err) return console.log(err);
-                console.log(`Video ${video} added`);
-    })}
+        fs.writeFileSync('videos.txt', videos, function (err) {
+            if (err) return console.log(err);
+            console.log(`Video ${video} added`);
+        })
+    }
 
     _formatTime = (seconds) => {
-        const inSeconds = seconds
-
-        const minutesFraction = Math.trunc((seconds/60))
+        const minutesFraction = Math.trunc((seconds / 60))
 
         const secondsFraction = Math.trunc((seconds % 60))
 
