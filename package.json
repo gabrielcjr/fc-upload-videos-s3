@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "<https://github.com/damianociarla/node-ffmpeg> <https://www.npmjs.com/package/get-video-duration> <https://github.com/argentinaluiz/son-videos>",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

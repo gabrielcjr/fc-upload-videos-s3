@@ -1,11 +1,13 @@
-require('dotenv').config()
-const { getVideoDurationInSeconds } = require('get-video-duration')
-const path = require('path');
-const fs = require('fs');
-const AWSUpload = require('./aws-upload.cjs')
+import dotenv from 'dotenv';
+import { getVideoDurationInSeconds } from 'get-video-duration'
+import path from 'path';
+import fs from 'fs';
+import AWSUpload from'./aws-upload.js'
 
-const REPO = process.env.REPO_TYPESCRIPT
-const CHAPTER = "6/"
+dotenv.config()
+
+const REPO = process.env.REPO_JAVA
+const CHAPTER = "23/"
 
 class Videos {
 
@@ -30,7 +32,7 @@ class Videos {
     }
 
     getFilesPath(completePath) {
-        const directoryPath = path.join(__dirname, 'videos');
+        const directoryPath = path.join(path.resolve(), 'videos');
         const fileNames = fs.readdirSync(directoryPath)
         if (completePath === false) {
             return fileNames
@@ -80,7 +82,7 @@ const fullLocalPath = videos.getFilesPath(true)
 const fileNames = videos.getFilesPath(false)
 
 const uploadVideos = () => {
-    for (i = 0; i != fullLocalPath.length; i++) {
+    for (let i = 0; i != fullLocalPath.length; i++) {
         const awsUpload = new AWSUpload(
             REPO,
             CHAPTER,
@@ -91,18 +93,18 @@ const uploadVideos = () => {
     }
 }
 
-const changePermission = () => {
-    for (i = 0; i != fullLocalPath.length; i++) {
+const changePermission = async () => {
+    for (let i = 0; i != fullLocalPath.length; i++) {
         const awsUpload = new AWSUpload(
             REPO,
             CHAPTER,
             fileNames[i],
             fullLocalPath[i]
         )
-        awsUpload.changePathToPublicRead()
+        await awsUpload.changePathToPublicRead()
     }
 }
 
 // uploadVideos()
 
-changePermission()
+await changePermission() //top level await
