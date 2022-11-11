@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 import { getVideoDurationInSeconds } from 'get-video-duration'
 import path from 'path';
 import fs from 'fs';
-import AWSUpload from'./aws-upload.js'
+import AWSUpload from './aws-upload.js'
 
 dotenv.config()
 

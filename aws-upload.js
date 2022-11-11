@@ -54,81 +54,44 @@ export default class AWSUpload {
             Bucket: process.env.AWS_BUCKET_NAME_READ,
             Prefix: this.S3PathToRepo + this.chapter + this.fileName
         }
-        const {Contents, IsTruncated} = await s3.listObjectsV2(params).promise();
-        
-        for(const content of Contents){
+        const { Contents, IsTruncated } = await s3.listObjectsV2(params).promise();
+
+        for (const content of Contents) {
             console.log(content.Key)
             await s3.putObjectAcl({
-                    Bucket: process.env.AWS_BUCKET_NAME_READ,
-                    Key: content.Key,
-                    AccessControlPolicy: {
-                        Grants: [
-                            {
-                                Grantee: {
-                                    Type: 'CanonicalUser',
-                                    DisplayName: 'wesleywillians',
-                                    ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
+                Bucket: process.env.AWS_BUCKET_NAME_READ,
+                Key: content.Key,
+                AccessControlPolicy: {
+                    Grants: [
+                        {
+                            Grantee: {
+                                Type: 'CanonicalUser',
+                                DisplayName: 'wesleywillians',
+                                ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
 
-                                },
-                                Permission: 'FULL_CONTROL'
                             },
-                            {
-                                Grantee: {
-                                    Type: "Group",
-                                    URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
-                                },
-                                Permission: "READ",
-                            }
-                        ],
-                        Owner: {
-                            DisplayName: 'wesleywillians',
-                            ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
+                            Permission: 'FULL_CONTROL'
+                        },
+                        {
+                            Grantee: {
+                                Type: "Group",
+                                URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
+                            },
+                            Permission: "READ",
                         }
+                    ],
+                    Owner: {
+                        DisplayName: 'wesleywillians',
+                        ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
                     }
-            }).promise()
+                }
+            })
         }
-        // s3.listObjectsV2(params, function (err, data) { //callback 
-        //     if (err) console.log(err, err.stack)
-        //     let contents = data.Contents
-        //     for (const content of contents) {
-        //         console.log(content.Key + " " + index + " files permission changed")
-        //         s3.putObjectAcl({
-        //             Bucket: process.env.AWS_BUCKET_NAME_READ,
-        //             Key: content.Key,
-        //             AccessControlPolicy: {
-        //                 Grants: [
-        //                     {
-        //                         Grantee: {
-        //                             Type: 'CanonicalUser',
-        //                             DisplayName: 'wesleywillians',
-        //                             ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
-
-        //                         },
-        //                         Permission: 'FULL_CONTROL'
-        //                     },
-        //                     {
-        //                         Grantee: {
-        //                             Type: "Group",
-        //                             URI: 'http://acs.amazonaws.com/groups/global/AllUsers',
-        //                         },
-        //                         Permission: "READ",
-        //                     }
-        //                 ],
-        //                 Owner: {
-        //                     DisplayName: 'wesleywillians',
-        //                     ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d',
-        //                 }
-        //             }
-        //         }).promise()
-        //     }
-            
-
-        //     if (data.IsTruncated) {
-        //         this.params.ContinuationToken = data.NextContinuationToken;
-        //         console.log("get further list...");
-        //         listAllKeys();
-        //     }
-        // })
+        if (IsTruncated) {
+            this.params.ContinuationToken = data.NextContinuationToken;
+            console.log("get further list...");
+            listAllKeys();
+        }
     }
 }
 
