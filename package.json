@@ -13,6 +13,14 @@
     "aws-sdk": "^2.1249.0",
     "dotenv": "^16.0.3",
     "get-video-duration": "^4.1.0",
+    "inquirer": "^9.1.4",
     "stream": "^0.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.5.1",
+    "eslint-plugin-promise": "^6.1.1"
   }
 }
