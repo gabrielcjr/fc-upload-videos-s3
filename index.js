@@ -7,7 +7,7 @@ import AWSUpload from './aws-upload.js'
 dotenv.config()
 
 const REPO = process.env.REPO_JAVA
-const CHAPTER = "23/"
+const CHAPTER = "teste/"
 
 class Videos {
 
@@ -55,22 +55,16 @@ class Videos {
     }
 
     _formatTime = (seconds) => {
-        const minutesFraction = Math.trunc((seconds / 60))
+        const dateObject = new Date(seconds * 1000)
 
-        const secondsFraction = Math.trunc((seconds % 60))
+        const videoMinutes = dateObject.getUTCMinutes();
 
-        if (minutesFraction >= 10 && secondsFraction >= 10) {
-            return `${minutesFraction}:${secondsFraction}`
-        }
-        if (minutesFraction < 10 && secondsFraction >= 10) {
-            return `0${minutesFraction}:${secondsFraction}`
-        }
-        if (minutesFraction < 10 && secondsFraction < 10) {
-            return `0${minutesFraction}:0${secondsFraction}`
-        }
-        if (minutesFraction >= 10 && secondsFraction < 10) {
-            return `${minutesFraction}:0${secondsFraction}`
-        }
+        const videoSeconds = dateObject.getUTCSeconds();
+
+        return videoMinutes.toString().padStart(2, '0') + ':' +
+            videoSeconds.toString().padStart(2, '0')
+
+
     }
 }
 
@@ -107,4 +101,4 @@ const changePermission = async () => {
 
 // uploadVideos()
 
-await changePermission() //top level await
+// await changePermission()

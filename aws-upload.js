@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'; //ES6 Modules EcmaScript 2015 
+import dotenv from 'dotenv';
 import AWS from 'aws-sdk';
 import stream from 'stream';
 import fs from 'fs';
@@ -11,9 +11,6 @@ const s3 = new AWS.S3({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 })
-
-// pegar o Contents e criar subgrupos de 200
-// Promise.all
 
 export default class AWSUpload {
 
@@ -90,7 +87,6 @@ export default class AWSUpload {
         if (IsTruncated) {
             this.params.ContinuationToken = data.NextContinuationToken;
             console.log("get further list...");
-            listAllKeys();
         }
     }
 }
