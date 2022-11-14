@@ -93,9 +93,7 @@ class Videos {
     _renameFiles() {
         this._orderByLastModified();
         const files = this.getFilesPath(true)
-        console.log(files)
         files.forEach((file, index) => {
-            console.log(file)
             fs.renameSync(file, `${this._filenameNormalized(file)}`);
         });
     }
