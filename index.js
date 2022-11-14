@@ -8,7 +8,7 @@ import AWSUpload from './aws-upload.js'
 dotenv.config()
 
 let REPO = ''// process.env.REPO_JAVA
-let CHAPTER = 'teste/'
+let CHAPTER = ''
 
 inquirer.prompt([
   {
@@ -51,6 +51,10 @@ class Videos {
   }
 
   createFileVideosDuration = async () => {
+    if (this.repo === '' || this.chapter === '') {
+      console.log('Escolha o repositório e/ou o capítulo')
+      process.exit(1)
+    }
     this._renameFiles()
 
     const files = this.getFilesPath(false)
