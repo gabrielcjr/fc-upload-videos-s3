@@ -24,6 +24,8 @@ class Videos {
         const files = this.getFilesPath(false)
         let videos = ""
 
+        this._renameFiles()
+
         for (const file of files) {
             const time = (await getVideoDurationInSeconds(`videos/${file}`))
             videos += this.repo + this.chapter + file + " " + this._formatTime(time) + "\r\n"
