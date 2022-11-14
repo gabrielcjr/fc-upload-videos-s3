@@ -29,6 +29,7 @@ class Videos {
             videos += this.repo + this.chapter + file + " " + this._formatTime(time) + "\r\n"
         }
         this._saveInFile(videos)
+        this._renameFiles()
     }
 
     getFilesPath(completePath) {
@@ -63,9 +64,52 @@ class Videos {
 
         return videoMinutes.toString().padStart(2, '0') + ':' +
             videoSeconds.toString().padStart(2, '0')
-
-
     }
+
+    _filenameNormalized = (file) => {
+        var map = {
+            "a": "á|à|ã",
+            "A": "Á|À|Ã",
+            "e": "é|ê",
+            "E": "É|Ê",
+            "i": "í",
+            "I": "Í",
+            "o": "ó|õ|ô",
+            "O": "Ó|Õ|Ô",
+            "u": "ú",
+            "U": "Ú",
+            "c": "ç",
+            "C": "Ç",
+            "-": " "
+        };
+
+        let str = file
+        for (var i in map) {
+            str = str.replace(new RegExp(map[i], "g"), i);
+        }
+        return str;
+    }
+
+    _renameFiles() {
+        this._orderByLastModified();
+        const files = this.getFilesPath(true)
+        console.log(files)
+        files.forEach((file, index) => {
+            console.log(file)
+            fs.renameSync(file, `${this._filenameNormalized(file)}`);
+        });
+    }
+
+    _orderByLastModified() {
+        const dir = "./"
+        const files = this.getFilesPath(true)
+        files.sort((a, b) => {
+            return fs.statSync(dir + a).mtime.getTime() -
+                fs.statSync(dir + b).mtime.getTime();
+        });
+    }
+
+
 }
 
 const videos = new Videos(REPO, CHAPTER)
