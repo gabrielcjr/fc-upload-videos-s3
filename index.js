@@ -4,42 +4,21 @@ import path from 'path'
 import fs from 'fs'
 import inquirer from 'inquirer'
 import AWSUpload from './aws-upload.js'
+import { questions, REPOS } from './cli-questions.js'
 
 dotenv.config()
 
-let REPO = ''// process.env.REPO_JAVA
-let CHAPTER = ''
+let answers = {}
 
-inquirer.prompt([
-  {
-    type: 'list',
-    name: 'Options',
-    message: 'Selecione o repositório da lista abaixo:',
-    choises: ['REPO_TYPESCRIPT', 'REPO_DOTNET', 'REPO_REACT',
-      'REPO_JAVA', 'REPO_PHP', 'REPO_PYTHON', 'REPO_DEPLOY_CLOUDS'
-    ]
-  }
-])
-  .then(answer => {
-    REPO = process.env + answer
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      console.log(error)
-    }
+await inquirer.prompt(questions)
+  .then((answer) => {
+    answers = answer
   })
 
-inquirer.prompt([
-  'Agora digite o número do capítulo'
-])
-  .then(answer => {
-    CHAPTER = answer + '/'
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      console.log(error)
-    }
-  })
+const REPO = REPOS[answers.repos]
+const CHAPTER = answers.chapter + '/'
+
+console.log(answers.repos)
 
 class Videos {
   repo = ''
@@ -174,30 +153,10 @@ const changePermission = async () => {
   }
 }
 
-inquirer.prompt([
-  'Deseja fazer o upload agora?'
-])
-  .then(answer => {
-    if (answer === 'y') {
-      uploadVideos()
-    }
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      console.log(error)
-    }
-  })
+if (answers.upload === true) {
+  uploadVideos()
+}
 
-inquirer.prompt([
-  'Deseja alterar as permissões no S3 agora?'
-])
-  .then(async answer => {
-    if (answer === 'y') {
-      await changePermission()
-    }
-  })
-  .catch((error) => {
-    if (error.isTtyError) {
-      console.log(error)
-    }
-  })
+if (answers.permission === true) {
+  changePermission()
+}

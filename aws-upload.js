@@ -79,7 +79,7 @@ export default class AWSUpload {
             ID: 'a3edb89dc8762b1d543412e1b0999c8b17e8a1e94c3694bf2e35d4b61499419d'
           }
         }
-      })
+      }).promise()
     }
   }
 }
