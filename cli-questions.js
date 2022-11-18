@@ -4,7 +4,7 @@ const questions = [{
   message: 'Selecione o repositório da lista abaixo:',
   choices: ['TYPESCRIPT', 'DOTNET', 'REACT',
     'JAVA', 'PHP', 'PYTHON', 'DEPLOY_CLOUDS',
-    'GOLANG'
+    'GOLANG', 'EDA'
   ]
 },
 {
@@ -34,7 +34,8 @@ const REPOS = {
   PHP: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-php/',
   PYTHON: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-python/',
   DEPLOY_CLOUDS: 'code/fullcycle/Deploy-das-Cloud-Providers/',
-  GOLANG: 'code/go/'
+  GOLANG: 'code/go/',
+  EDA: 'code/fullcycle/fc3/EDA/'
 }
 
 export { questions, REPOS }

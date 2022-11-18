@@ -82,8 +82,8 @@ class Videos {
 
   _filenameNormalized = (file) => {
     const map = {
-      a: 'á|à|ã',
-      A: 'Á|À|Ã',
+      a: 'á|à|ã|â',
+      A: 'Á|À|Ã|Â',
       e: 'é|ê',
       E: 'É|Ê',
       i: 'í',
@@ -141,7 +141,7 @@ const uploadVideos = () => {
   }
 }
 
-const changePermission = async () => {
+const changePermission = () => {
   for (let i = 0; i !== fullLocalPath.length; i++) {
     const awsUpload = new AWSUpload(
       REPO,
@@ -149,7 +149,7 @@ const changePermission = async () => {
       fileNames[i],
       fullLocalPath[i]
     )
-    await awsUpload.changePathToPublicRead()
+    awsUpload.changePathToPublicRead()
   }
 }
 
