@@ -63,7 +63,7 @@ class Videos {
   }
 
   _saveInFile = (videos) => {
-    fs.writeFileSync('videos.txt', videos, function (err) {
+    fs.writeFileSync('videos.md', videos, function (err) {
       if (err) return console.log(err)
       console.log(`Video ${videos} added`)
     })
