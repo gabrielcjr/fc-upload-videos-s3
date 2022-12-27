@@ -52,7 +52,7 @@ export default class AWSUpload {
 
     for (const content of Contents) {
       console.log(content.Key)
-      await s3.putObjectAcl({
+      s3.putObjectAcl({
         Bucket: process.env.AWS_BUCKET_NAME_READ,
         Key: content.Key,
         AccessControlPolicy: {
