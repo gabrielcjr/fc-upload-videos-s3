@@ -4,6 +4,7 @@ const questions = [{
   message: 'Selecione o repositório da lista abaixo:',
   choices: [
     'DevOpsPro',
+    'DevOpsProBonus',
     'MBA_marketing_pessoal',
     'TYPESCRIPT',
     'DOTNET',
@@ -20,6 +21,7 @@ const questions = [{
     'MBA_solid_design_pattern',
     'MBA_solution_architecture',
     'MBA_system_design_and_design_docs',
+    'MBA_lideranca',
     'GOEXPERT'
   ]
 },
@@ -43,14 +45,15 @@ const questions = [{
 ]
 
 const REPOS = {
-  DevOpsPro: 'devopspro/bonus/workshops/05-kubernetes/',
+  DevOpsPro: 'devopspro/18-kubernetes-aplicacoes/',
+  DevOpsProBonus: 'devopspro/bonus/encontros_ao_vivo/',
   MBA_marketing_pessoal: 'code/mba/marketing_pessoal/',
   TYPESCRIPT: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-typescript-v2/',
   DOTNET: 'code/fullcycle/fc3/microsservico-api-do-catalogo-com-dotnet/',
   REACT: 'code/fullcycle/fc3/projeto-pratico-codeflix-react/',
   JAVA: 'code/fullcycle/fc3/microsservico-api-do-catalogo-com-java/',
   PHP: 'code/fullcycle/fc3/microsservico-api-do-catalogo-com-php/',
-  PYTHON: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-python/',
+  PYTHON: 'code/fullcycle/fc3/microsservico-catalogo-de-videos-com-python-v2/',
   DEPLOY_CLOUDS: 'code/fullcycle/Deploy-das-Cloud-Providers/',
   KEYCLOAK: 'code/fullcycle/autenticacao-com-keycloack-new/',
   MBA_microsservicos: 'code/mba/microsservicos/',
@@ -60,6 +63,7 @@ const REPOS = {
   MBA_solid_design_pattern: 'code/mba/solid-design-pattern/',
   MBA_solution_architecture: 'code/mba/solution-architecture/',
   MBA_system_design_and_design_docs: 'code/mba/system-design-and-design-docs/',
+  MBA_lideranca: 'code/mba/lideranca/',
   GOEXPERT: 'code/go/'
 }
 
