@@ -27,8 +27,10 @@ const questions = [{
     'MBA_lideranca',
     'MBA_apache_kafka',
     'MBA_banco_de_dados',
+    'MBA_cloud',
     'GOEXPERT',
-    'GOEXPERT_labs'
+    'GOEXPERT_labs',
+    'LIDERANCA_TECNICA_gestao_de_conflito'
   ]
 },
 {
@@ -51,7 +53,7 @@ const questions = [{
 ]
 
 const REPOS = {
-  DevOpsPro: 'devopspro/18-kubernetes-aplicacoes/',
+  DevOpsPro: 'devopspro/19-github-github_actions/',
   DevOpsProBonus: 'devopspro/bonus/encontros_ao_vivo/',
   DevOpsProBonusWorkshops: 'devopspro/bonus/workshops/',
   MBA_marketing_pessoal: 'code/mba/marketing_pessoal/',
@@ -75,8 +77,10 @@ const REPOS = {
   MBA_lideranca: 'code/mba/lideranca/',
   MBA_apache_kafka: 'code/mba/apache_kafka/',
   MBA_banco_de_dados: 'code/mba/banco_de_dados/',
+  MBA_cloud: 'code/mba/cloud/',
   GOEXPERT: 'code/go/',
-  GOEXPERT_labs: 'code/go/labs/'
+  GOEXPERT_labs: 'code/go/labs/',
+  LIDERANCA_TECNICA_gestao_de_conflito: 'code/mba/lideranca_tecnica/gestao_de_conflito'
 }
 
 export { questions, REPOS }
